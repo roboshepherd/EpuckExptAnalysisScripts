@@ -1,0 +1,23 @@
+Comm load graph generation procedure
+
+
+./run-all.sh $OUTFILE_PREFIX $START $END
+
+
+
+
+
+
+0. find start and end time from expt_history
+
+1. report_*_signals.sh => gives signals / 10 sec
+wc -l *.txt
+
+set max-line for sum (now 215)
+2. sum_*_signals.py => gives signals / 50 sec
+
+3. copy 3 sets of above files to summary_stat
+
+4. stat_*_signal.py
+
+5. plot_both_signals_stat.py
