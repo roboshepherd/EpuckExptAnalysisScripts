@@ -11,8 +11,8 @@ du_se = []
 
 THRESHOLD = 0.2 
 
-def get_summed_array(val_list): 
-    sums = [0 for x in range(INTERVAL -1)]
+def get_summed_list(val_list): 
+    sums = [0 for x in range(INTERVAL - 1)]
     items_count = len(val_list)
     iter = INTERVAL
    
@@ -32,7 +32,7 @@ def get_summed_array(val_list):
                 iter += 1
                 break
     print "Len: ", len(sums)       
-    return array(sums)
+    return sums
 
 if __name__ == '__main__':
     numargs = len(sys.argv)
@@ -58,24 +58,54 @@ if __name__ == '__main__':
         y = array(du_m)
         err = array(du_se)
         # get convergence line                
-        conv = get_summed_array(absolute(du_m))
+        conv_list = get_summed_list(absolute(du_m))
+        conv = array(conv_list)
         # find conv val
         print conv
-        #for v in conv:
-        #    if (v < THRESHOLD):
-        print "Convergence Threshold:%f,  X Val:%s"\
-                %(THRESHOLD, where(conv >= THRESHOLD))
+        conv_x = 0
+        conv_y = 0
+        conv_not_found = True
+        for v in conv_list:
+            if (v < THRESHOLD) and conv_not_found:
+                #print "Convergence Threshold:%f, Y:%f  X:%f"\
+                #%(THRESHOLD, v, conv_list.index(v))
+                conv_x = conv_list.index(v) + 1
+                conv_y = v
+                conv_not_found = False
+            elif v >= THRESHOLD:
+                conv_x = 0
+                conv_not_found = True
+        
+        #if conv_x != 0:
+        print "Convergence Threshold:%f, X:%f  Y:%f"\
+                %(THRESHOLD, conv_x, conv_y)
         
         x2 = array(step[INTERVAL:])
         y2 = array(conv[INTERVAL:])
         
-        errorbar(step, du_m, yerr=du_se, ecolor = '#C0C0C0')
+        #errorbar(step, du_m, yerr=du_se, ecolor = '#C0C0C0')
         #plot(x, y, x, conv)
-        plot(x, y, x2, y2)
+       
+        
+        errorbar(x, y, yerr=du_se, fmt='k--', ecolor = '#C0C0C0',\
+        label='Sum of task urgency change')
+        errorbar(x2, y2, yerr=None, fmt='k', ecolor = '#C0D000',\
+        label='Absolute sum  over a fixed window')
+        
+        plot(x, y, 'k--', x2, y2, 'k')
+        
+        annotate('convergence', xy=(conv_x + 0.3, conv_y),  xycoords='data',
+                xytext=(0.9, 0.60), textcoords='axes fraction',
+                arrowprops=dict(facecolor='black', shrink=0.09),
+                horizontalalignment='right', verticalalignment='top',
+                fontsize=13)
+
+
         
         xlabel('Time Step (s)')
         ylabel('Sum of Task Urgency Change')
         title('Sum of task urgency changes over time ')
         grid(True)
+        legend()
         savefig(outfile)
         show()   
