@@ -56,6 +56,6 @@ if __name__ == '__main__':
         for file in os.listdir(dir_path):
             if fnmatch.fnmatch(file, 'Delta*.txt'):
                 print "Parsing: ", file
-                outfile = "SumOver" + str(INTERVAL) + "sec" + file
+                outfile = "SumOver" + str(INTERVAL) + "sec-" + file
                 infile = dir_path + '/' + file    
                 sum_translation(infile, outfile)

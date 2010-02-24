@@ -15,7 +15,7 @@ du_se = []
 if __name__ == '__main__':
     numargs = len(sys.argv)
     if numargs < 3:
-        print "Usage: %s <max-step> <file1> ..." %sys.argv[0]
+        print "Usage: %s <max-step> <delta-file1> ... <fileN>" %sys.argv[0]
         sys.exit(1)
     else:
         max_step = int(sys.argv[1])

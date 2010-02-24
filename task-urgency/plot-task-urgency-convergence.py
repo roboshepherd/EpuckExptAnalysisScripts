@@ -9,7 +9,7 @@ du_m = []
 #du_sd = []
 du_se = []
 
-INTERVAL = 6
+THRESHOLD = 0.2 
 
 def get_summed_array(val_list): 
     sums = [0 for x in range(INTERVAL -1)]
@@ -36,12 +36,13 @@ def get_summed_array(val_list):
 
 if __name__ == '__main__':
     numargs = len(sys.argv)
-    if numargs < 2:
-        print "Usage: %s  <infile> <outfile>" %sys.argv[0]
+    if numargs < 3:
+        print "Usage: %s  <infile> <outfile> <window-interval>" %sys.argv[0]
         sys.exit(1)
     else:
         infile = sys.argv[1]
         outfile = sys.argv[2]
+        INTERVAL = int(sys.argv[3])
         for line in fileinput.input(infile):
             s = int(line.split(';')[0])
             m = float(line.split(';')[1])
@@ -56,12 +57,22 @@ if __name__ == '__main__':
         x = array(step)
         y = array(du_m)
         err = array(du_se)
-        # get convergence line
+        # get convergence line                
         conv = get_summed_array(absolute(du_m))
+        # find conv val
         print conv
+        #for v in conv:
+        #    if (v < THRESHOLD):
+        print "Convergence Threshold:%f,  X Val:%s"\
+                %(THRESHOLD, where(conv >= THRESHOLD))
+        
+        x2 = array(step[INTERVAL:])
+        y2 = array(conv[INTERVAL:])
+        
         errorbar(step, du_m, yerr=du_se, ecolor = '#C0C0C0')
-        plot(x, y, x, conv)
-
+        #plot(x, y, x, conv)
+        plot(x, y, x2, y2)
+        
         xlabel('Time Step (s)')
         ylabel('Sum of Task Urgency Change')
         title('Sum of task urgency changes over time ')

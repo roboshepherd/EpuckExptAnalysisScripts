@@ -1,0 +1,10 @@
+Step 1:
+Urgency raw log.txt -> find-delta-urgency*.py
+
+step-2:
+DeltaUrgency.txt -> sum-delta*.py
+
+step-3:
+N x SumOverNs-Delta*.txt -> stat-delta*.py (N = no of expt samples)
+
+===> 1 GlobalTaskUrgencyStat.txt
