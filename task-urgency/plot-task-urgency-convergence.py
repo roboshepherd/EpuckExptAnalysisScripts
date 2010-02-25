@@ -9,7 +9,7 @@ du_m = []
 #du_sd = []
 du_se = []
 
-THRESHOLD = 0.2 
+#THRESHOLD = 0.2 
 
 def get_summed_list(val_list): 
     sums = [0 for x in range(INTERVAL - 1)]
@@ -36,20 +36,22 @@ def get_summed_list(val_list):
 
 if __name__ == '__main__':
     numargs = len(sys.argv)
-    if numargs < 3:
-        print "Usage: %s  <infile> <outfile> <window-interval>" %sys.argv[0]
+    if numargs < 4:
+        print "Usage: %s  <infile> <outfile> <window-size> <threshold>" \
+        %sys.argv[0]
         sys.exit(1)
     else:
         infile = sys.argv[1]
         outfile = sys.argv[2]
         INTERVAL = int(sys.argv[3])
+        THRESHOLD = float(sys.argv[4])
         for line in fileinput.input(infile):
-            s = int(line.split(';')[0])
+            #s = int(line.split(';')[0])
             m = float(line.split(';')[1])
             #sd = float(line.split(';')[2])
             se = float(line.split(';')[3])
             #print "line:", s, m, se
-            step.append(s)
+            step.append(fileinput.lineno())
             du_m.append(m)
             #du_sd.append(sd)
             du_se.append(se)        
@@ -60,28 +62,37 @@ if __name__ == '__main__':
         # get convergence line                
         conv_list = get_summed_list(absolute(du_m))
         conv = array(conv_list)
+
+        # dump conv data
+        dumpfile = outfile.split('.')[0] + '-'+ str(INTERVAL) +'-steps-'\
+        + str(THRESHOLD) + '-threshold'  + '.txt'
+        f = open(dumpfile, 'w')
+        for i, v in enumerate(conv_list):
+            data = str(i) + ';' + str(v) + '\n'
+            f.write(data)
+
         # find conv val
         print conv
         conv_x = 0
         conv_y = 0
         conv_not_found = True
         for v in conv_list:
-            if (v < THRESHOLD) and conv_not_found:
+            if (v <= THRESHOLD) and conv_not_found:
                 #print "Convergence Threshold:%f, Y:%f  X:%f"\
                 #%(THRESHOLD, v, conv_list.index(v))
-                conv_x = conv_list.index(v) + 1
+                conv_x = conv_list.index(v)
                 conv_y = v
                 conv_not_found = False
-            elif v >= THRESHOLD:
+            elif v > THRESHOLD:
                 conv_x = 0
                 conv_not_found = True
         
         #if conv_x != 0:
         print "Convergence Threshold:%f, X:%f  Y:%f"\
                 %(THRESHOLD, conv_x, conv_y)
-        
-        x2 = array(step[INTERVAL:])
-        y2 = array(conv[INTERVAL:])
+        pos = (INTERVAL -1)
+        x2 = array(step[pos:])
+        y2 = array(conv[pos:])
         
         #errorbar(step, du_m, yerr=du_se, ecolor = '#C0C0C0')
         #plot(x, y, x, conv)
