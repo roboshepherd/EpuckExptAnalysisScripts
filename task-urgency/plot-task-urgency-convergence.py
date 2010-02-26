@@ -76,16 +76,18 @@ if __name__ == '__main__':
         conv_x = 0
         conv_y = 0
         conv_not_found = True
-        for v in conv_list:
-            if (v <= THRESHOLD) and conv_not_found:
-                #print "Convergence Threshold:%f, Y:%f  X:%f"\
-                #%(THRESHOLD, v, conv_list.index(v))
-                conv_x = conv_list.index(v)
-                conv_y = v
-                conv_not_found = False
-            elif v > THRESHOLD:
+        cp = []        
+        for i, v in enumerate(conv_list):
+            if v > THRESHOLD:
                 conv_x = 0
                 conv_not_found = True
+            if (v <= THRESHOLD) and conv_not_found:
+                print "Convergence Threshold:%f, Y:%f  X:%d"\
+                %(THRESHOLD, v, i)
+                conv_x = i
+                conv_y = v
+                conv_not_found = False
+
         
         #if conv_x != 0:
         print "Convergence Threshold:%f, X:%f  Y:%f"\
@@ -99,14 +101,14 @@ if __name__ == '__main__':
        
         
         errorbar(x, y, yerr=du_se, fmt='k--', ecolor = '#C0C0C0',\
-        label='Sum of task urgency change')
+        label='Sum of task urgency changes')
         errorbar(x2, y2, yerr=None, fmt='k', ecolor = '#C0D000',\
         label='Absolute sum  over a fixed window')
         
         plot(x, y, 'k--', x2, y2, 'k')
         
         annotate('convergence', xy=(conv_x + 0.3, conv_y),  xycoords='data',
-                xytext=(0.9, 0.60), textcoords='axes fraction',
+                xytext=(0.9, 0.80), textcoords='axes fraction',
                 arrowprops=dict(facecolor='black', shrink=0.09),
                 horizontalalignment='right', verticalalignment='top',
                 fontsize=13)
@@ -114,7 +116,7 @@ if __name__ == '__main__':
 
         
         xlabel('Time Step (s)')
-        ylabel('Sum of Task Urgency Change')
+        ylabel('Sum of task urgency changes')
         title('Sum of task urgency changes over time ')
         grid(True)
         legend()
