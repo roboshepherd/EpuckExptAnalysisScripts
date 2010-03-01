@@ -22,7 +22,7 @@ if __name__ == '__main__':
         input_files = sys.argv[2:]
         file_count = len(input_files)
         lineno = HEADER_LINE_END + 1
-        fn = "RobotSensitizationStat-Total-" + str(max_step)  +  "steps.txt"
+        fn = "RobotDist2TasksStat-Total-" + str(max_step)  +  "steps.txt"
         f = open(fn, 'w')
         step = 1
         try:

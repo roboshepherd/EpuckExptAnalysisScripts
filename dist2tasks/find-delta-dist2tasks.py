@@ -30,7 +30,7 @@ def main():
 
 def find_delta_sensitization(infile, outfile):
     f = open(outfile, 'w')
-    header = "##;## \n Time; Step; Delta Sensitization \n"
+    header = "##;## \n Time; Step; Delta Dist to Tasks \n"
     last_line = [0 for x in range(MAX_SHOPTASK)]
     f.write(header)
     try:

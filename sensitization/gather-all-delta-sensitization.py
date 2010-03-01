@@ -19,7 +19,7 @@ if __name__ == '__main__':
 
 
     if numargs < 5:
-        print "Usage: %s <delta-dir> <expt-start> <expt-end> <outfile-prefix>" %sys.argv[0]
+        print "Usage: %s <delta-dir> <expt-start> <expt-end> <interval> <outfile-prefix>" %sys.argv[0]
         sys.exit(1)
     else:
         dir_path = sys.argv[1]
@@ -30,7 +30,7 @@ if __name__ == '__main__':
         t1 = EXPT_START_TIME
         t2 = EXPT_START_TIME + INTERVAL
         
-        outfile = fxt + "GatheredSensitizationOver"+ str(INTERVAL)+ "s"+ ".txt"
+        outfile = fxt + "-GatheredSensitizationOver"+ str(INTERVAL)+ "s"+ ".txt"
         f = open(outfile, 'w')
         header = "##;## \n AbsTimeStamp; Translation \n"
         f.write(header)

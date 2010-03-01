@@ -7,16 +7,15 @@ import fileinput
 
 HEADER_LINE = 2
 iter = 1
-cum_trans = 0
+cum_sz = 0
 
 
 if __name__ == '__main__':
     numargs = len(sys.argv)
 
 
-    if numargs < 4:
-        print "Usage: %s <delta-dir> <expt-start> <expt-end> <interval>\
-        <outfile-ext>" %sys.argv[0]
+    if numargs < 5:
+        print "Usage: %s <delta-dir> <expt-start> <expt-end> <interval> <outfile-prefix>" %sys.argv[0]
         sys.exit(1)
     else:
         dir_path = sys.argv[1]
@@ -27,7 +26,7 @@ if __name__ == '__main__':
         t1 = EXPT_START_TIME
         t2 = EXPT_START_TIME + INTERVAL
         
-        outfile = fxt + "GatheredTranslationOver"+ str(INTERVAL)+ "s"+ ".txt"
+        outfile = fxt + "-GatheredDist2TasksOver"+ str(INTERVAL)+ "s"+ ".txt"
         f = open(outfile, 'w')
         header = "##;## \n AbsTimeStamp; Translation \n"
         f.write(header)
@@ -49,14 +48,14 @@ if __name__ == '__main__':
                         d = float(dt)
                         # check ts and include in sum                        
                         if ((t > t1) and (t < t2)):
-                            cum_trans += d
+                            cum_sz += d
                             print "Added: %f at time %f" %(d, t)
-                        #fileinput.close()           
-            outline = str(t1) + ";"  + str(cum_trans) + "\n"
+                        #fileinput.close()          
+            outline = str(t1) + ";"  + str(cum_sz) + "\n"
             f.write(outline)
             # reset
             t1 = t2
             t2 = t2 + INTERVAL
             iter += 1
-            cum_trans = 0            
+            cum_sz = 0            
     f.close()
