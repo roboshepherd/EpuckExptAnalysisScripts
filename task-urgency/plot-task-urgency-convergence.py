@@ -55,8 +55,9 @@ if __name__ == '__main__':
             du_m.append(m)
             #du_sd.append(sd)
             du_se.append(se)        
-        fileinput.close()   
-        x = array(step)
+        fileinput.close()
+        items = len(du_m)   
+        x = arange(items)
         y = array(du_m)
         err = array(du_se)
         # get convergence line                
@@ -92,7 +93,7 @@ if __name__ == '__main__':
         #if conv_x != 0:
         print "Convergence Threshold:%f, X:%f  Y:%f"\
                 %(THRESHOLD, conv_x, conv_y)
-        pos = (INTERVAL -1)
+        pos = (INTERVAL -2)
         x2 = array(step[pos:])
         y2 = array(conv[pos:])
         
