@@ -117,8 +117,8 @@ if __name__ == '__main__':
 
         
         xlabel('Time Step (s)')
-        ylabel('Sum of task urgency changes')
-        title('Sum of task urgency changes over time ')
+        ylabel('Sum of Task Urgency Changes')
+        #title('Sum of task urgency changes over time ')
         grid(True)
         legend()
         savefig(outfile)

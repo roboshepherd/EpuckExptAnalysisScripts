@@ -8,7 +8,7 @@ import numpy
 import pylab 
 
 
-HEADER_LINE_END = 2
+HEADER_LINE_END = 4
 MAX_SHOPTASK = 4
 ts = []
 step = []
@@ -22,10 +22,11 @@ def plot_urgency(outfile):
         if fileinput.lineno() <= HEADER_LINE_END:
             continue
         else:
-            #tm1 = line.split(";")[0]
-            #tm2 = line.split(";")[1]
-            s = line.split(";")[1]
-            tasks = line.split(";")[2:]
+            tm1 = line.split(";")[0]
+            tm2 = line.split(";")[1]
+            s = line.split(";")[2]
+            tasks = line.split(";")[4:]
+            #print tasks
             t1 = tasks[0]
             t2 = tasks[1]
             t3 = tasks[2]
@@ -43,13 +44,13 @@ def plot_urgency(outfile):
     y3 = numpy.array(task3)
     y4 = numpy.array(task4)
     
-    pylab.plot(x, y1, 'r+', x, y2, 'g,',  x, y3, 'b--',  x, y4, 'k')
+    pylab.plot(x, y1, 'r', x, y2, 'g.',  x, y3, 'b--',  x, y4, 'k+')
     #pylab.ylim(0,1)
     pylab.xlabel('Time Stamp (s)')
-    pylab.ylabel('Task Urgency')
+    pylab.ylabel('Sensitization')
     #pylab.title('Task urgencies recorded at Task-Server ')
     pylab.grid(True)
-    pylab.legend(('Task1', 'Task2', 'Task3', 'Task4'))
+    pylab.legend(('Task1', 'Task2', 'Task3', 'Task4'), loc=2)
     fn = 'Plot' + outfile.split('.')[0] + '.png'
     pylab.savefig(fn)
 

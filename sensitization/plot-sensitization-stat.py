@@ -28,16 +28,17 @@ if __name__ == '__main__':
             #du_sd.append(sd)
             du_se.append(se)  
         fileinput.close()   
-        x = array(step)
+        x = arange(len(du_m))
         y = array(du_m)
         err = array(du_se)
         #print y
-        errorbar(step, du_m, yerr=du_se, ecolor = '#C0C0C0')
+        errorbar(x, y, yerr=du_se, ecolor = '#C0C0C0')
         plot(x, y)
 
         xlabel('Time Step (s)')
-        ylabel('Sum of Robot Sensitization Change')
-        title('Change of robot sensitizations for tasks over time ')
+        ylabel('Sum of Robot Sensitization Changes')
+        
+        #title('Change of robot sensitizations for tasks over time ')
         grid(True)
         savefig(outfile)
         show()   
