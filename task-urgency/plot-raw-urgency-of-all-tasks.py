@@ -37,18 +37,20 @@ def plot_urgency(outfile):
             task3.append(float(t3))
             task4.append(float(t4))
         
-    x = numpy.array(ts)
+    x = numpy.arange(len(task1))
     y1 = numpy.array(task1)
     y2 = numpy.array(task2)
     y3 = numpy.array(task3)
     y4 = numpy.array(task4)
     
-    pylab.plot(x, y1, x, y2, x, y3, x, y4)
-    pylab.ylim(0,1)
-    pylab.xlabel('Time Stamp (s)')
+    pylab.plot(x, y1, 'r+', x, y2, 'g,',  x, y3, 'b--',  x, y4, 'k')
+    #pylab.ylim(0,1)
+    pylab.xlabel('Time Step (s)')
     pylab.ylabel('Task Urgency')
-    pylab.title('Task urgencies recorded at Task-Server ')
+    pylab.xlim()
+    #pylab.title('Task urgencies recorded at Task-Server ')
     pylab.grid(True)
+    pylab.legend(('Task1', 'Task2', 'Task3', 'Task4'))
     fn = 'Plot' + outfile.split('.')[0] 
     pylab.savefig(fn)
 

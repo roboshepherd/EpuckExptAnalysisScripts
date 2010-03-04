@@ -25,7 +25,7 @@ def plot_urgency(infile):
             tm1 = line.split(";")[0]
             tm2 = line.split(";")[1]
             s = line.split(";")[2]
-            tasks = line.split(";")[4:]
+            tasks = line.split(";")[5:]
             #print tasks
             t1 = tasks[0]
             t2 = tasks[1]
@@ -44,10 +44,10 @@ def plot_urgency(infile):
     y3 = numpy.array(task3)
     y4 = numpy.array(task4)
     
-    pylab.plot(x, y1, 'r', x, y2, 'g.',  x, y3, 'b--',  x, y4, 'k+')
+    pylab.plot(x, y1, 'r', x, y2, 'g.',  x, y3, 'b--',  x, y4, 'ko')
     #pylab.ylim(0,1)
     pylab.xlabel('Time Stamp (s)')
-    pylab.ylabel('Sensitization')
+    pylab.ylabel('Distance to task (pixel)')
     #pylab.title('Task urgencies recorded at Task-Server ')
     pylab.grid(True)
     pylab.legend(('Task1', 'Task2', 'Task3', 'Task4'), loc=2)

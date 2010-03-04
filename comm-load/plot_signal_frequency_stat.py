@@ -32,15 +32,15 @@ if __name__ == '__main__':
             du_se.append(round(se))  
         fileinput.close()   
         x = arange(len(du_m))
-        y = array(du_m, dtype=int)
+        y = array(du_m)
         err = array(du_se)
         #print y
-        errorbar(x, y, yerr=du_se, ecolor = '#C0C0C0')
+        errorbar(x, y, yerr=err, ecolor = '#C0C0C0')
         plot(x, y)
 
         xlabel('Time Step (s)')
         ylabel('No of Emitted Signals')
-        ylim(18, 22)
+        #ylim(18, 22)
         #title('Task Info Signalling Frequency ')
         grid(True)
         savefig(outfile)
