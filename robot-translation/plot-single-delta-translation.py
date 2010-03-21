@@ -24,7 +24,7 @@ if __name__ == '__main__':
             s = int(line.split(';')[1])
             m = float(line.split(';')[2])
             step.append(s)
-            du_m.append(m)
+            du_m.append(m/10)
   
         fileinput.close()   
         x = arange(len(du_m))
@@ -32,10 +32,10 @@ if __name__ == '__main__':
 
         #print y
         #errorbar(x, y, yerr=du_se, ecolor = '#C0C0C0')
-        plot(x, y)
+        plot(x, y, 'k')
 
         xlabel('Time Step (s)')
-        ylabel('Change of Robot Translation (pixel)')
+        ylabel('Change of Robot Translation (cm)')
         #title('Sum of robot translation changes over time ')
         grid(True)
         savefig(outfile)

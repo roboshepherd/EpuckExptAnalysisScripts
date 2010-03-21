@@ -12,13 +12,14 @@ HEADER_LINE_END = 4
 MAX_SHOPTASK = 4
 ts = []
 step = []
+task0 = []
 task1 = []
 task2 = []
 task3 = []
 task4 = []
 
-def plot_urgency(infile):    
-    for line in fileinput.input(infile):
+def plot_sz(outfile):    
+    for line in fileinput.input(outfile):
         if fileinput.lineno() <= HEADER_LINE_END:
             continue
         else:
@@ -26,32 +27,38 @@ def plot_urgency(infile):
             tm2 = line.split(";")[1]
             s = line.split(";")[2]
             tasks = line.split(";")[4:]
-            #print tasks
-            t1 = tasks[0]
-            t2 = tasks[1]
-            t3 = tasks[2]
-            t4 = tasks[3]
-            #ts.append(float(tm1))
+            t0 = tasks[0]
+            t1 = tasks[1]
+            t2 = tasks[2]
+            t3 = tasks[3]
+            t4 = tasks[4]
+            ts.append(float(tm1))
             step.append(float(s))
+            task0.append(float(t0))
             task1.append(float(t1))
             task2.append(float(t2))
             task3.append(float(t3))
             task4.append(float(t4))
         
-    x = numpy.array(step)
+    x = numpy.arange(len(task1))
+    y0 = numpy.array(task0)
     y1 = numpy.array(task1)
     y2 = numpy.array(task2)
     y3 = numpy.array(task3)
     y4 = numpy.array(task4)
     
-    pylab.plot(x, y1, 'r', x, y2, 'g.',  x, y3, 'b--',  x, y4, 'k+')
+    #pylab.plot(x, y0, 'm.', x, y1, 'r+', x, y2, 'g.',  x, y3, 'b--',\
+     # x, y4, 'k')
+    pylab.plot( x, y1, 'r+', x, y2, 'g-',  x, y3, 'b.',\
+     x, y4, 'k')
     #pylab.ylim(0,1)
-    pylab.xlabel('Time Stamp (s)')
-    pylab.ylabel('Sensitization')
+    pylab.xlabel('Time Step (s)')
+    pylab.ylabel('Task Sensitization')
+    #pylab.xlim()
     #pylab.title('Task urgencies recorded at Task-Server ')
     pylab.grid(True)
-    pylab.legend(('Task1', 'Task2', 'Task3', 'Task4'), loc=2)
-    fn = 'Plot' + infile.split('.')[0] + '.pdf'
+    #pylab.legend(('RW', 'Task1', 'Task2', 'Task3', 'Task4'))
+    fn = 'Plot' + outfile.split('.')[0] + '.png'
     pylab.savefig(fn)
 
     pylab.show()
@@ -60,9 +67,11 @@ def plot_urgency(infile):
 if __name__ == '__main__':
     numargs = len(sys.argv)
 
-    if numargs < 2 or numargs > 2:
+    if numargs < 2:
         print "Usage: %s <filename>" %sys.argv[0]
         sys.exit(1)
     else:
-        infile =  sys.argv[1]
-        plot_urgency(infile)
+        files = sys.argv[1:]
+        for file in files:
+            outfile =  file
+            plot_sz(outfile)

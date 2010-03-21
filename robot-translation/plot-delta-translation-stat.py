@@ -24,9 +24,9 @@ if __name__ == '__main__':
             se = float(line.split(';')[3])
             #print "line:", s, m, se
             step.append(s)
-            du_m.append(m)
+            du_m.append(m/1000)
             #du_sd.append(sd)
-            du_se.append(se)  
+            du_se.append(se/1000)  
         fileinput.close()   
         x = arange(len(du_m))
         y = array(du_m)
@@ -36,7 +36,7 @@ if __name__ == '__main__':
         plot(x, y)
 
         xlabel('Time Step (s)')
-        ylabel('Sum of Robot Translation (pixel)')
+        ylabel('Sum of Robot Translation (m)')
         #title('Sum of robot translation changes over time ')
         grid(True)
         savefig(outfile)

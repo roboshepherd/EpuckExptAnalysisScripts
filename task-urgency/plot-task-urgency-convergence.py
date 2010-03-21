@@ -108,11 +108,11 @@ if __name__ == '__main__':
         
         plot(x, y, 'k--', x2, y2, 'k')
         
-        annotate('convergence', xy=(conv_x + 0.3, conv_y),  xycoords='data',
-                xytext=(0.9, 0.80), textcoords='axes fraction',
-                arrowprops=dict(facecolor='black', shrink=0.09),
-                horizontalalignment='right', verticalalignment='top',
-                fontsize=13)
+        #annotate('convergence', xy=(conv_x + 0.3, conv_y),  xycoords='data',
+        #        xytext=(0.9, 0.80), textcoords='axes fraction',
+        #        arrowprops=dict(facecolor='black', shrink=0.09),
+        #        horizontalalignment='right', verticalalignment='top',
+        #        fontsize=13)
 
 
         

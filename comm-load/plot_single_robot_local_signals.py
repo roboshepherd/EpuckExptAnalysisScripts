@@ -11,7 +11,7 @@ sig_ts = []
 
 infile = sys.argv[1]
 INTERVAL = int(sys.argv[2])
-outfile = sys.argv[1].split('.')[0] + '.eps'
+outfile = sys.argv[1].split('.')[0] + '.pdf'
 
 for line in fileinput.input(infile):
     if fileinput.lineno() <= HEADER_END:

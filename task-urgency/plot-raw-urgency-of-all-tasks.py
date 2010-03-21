@@ -51,7 +51,7 @@ def plot_urgency(outfile):
     #pylab.title('Task urgencies recorded at Task-Server ')
     pylab.grid(True)
     pylab.legend(('Task1', 'Task2', 'Task3', 'Task4'))
-    fn = 'Plot' + outfile.split('.')[0] 
+    fn = 'Plot' + outfile.split('.')[0] + '.pdf'
     pylab.savefig(fn)
 
     pylab.show()
