@@ -17,7 +17,7 @@ task2 = []
 task3 = []
 task4 = []
 
-def plot_urgency(infile):    
+def plot_urgency(infile, outfile):    
     for line in fileinput.input(infile):
         if fileinput.lineno() <= HEADER_LINE_END:
             continue
@@ -25,7 +25,7 @@ def plot_urgency(infile):
             tm1 = line.split(";")[0]
             tm2 = line.split(";")[1]
             s = line.split(";")[2]
-            tasks = line.split(";")[4:]
+            tasks = line.split(";")[5:]
             #print tasks
             t1 = tasks[0]
             t2 = tasks[1]
@@ -51,7 +51,7 @@ def plot_urgency(infile):
     #pylab.title('Task urgencies recorded at Task-Server ')
     pylab.grid(True)
     pylab.legend(('Task1', 'Task2', 'Task3', 'Task4'), loc=2)
-    fn = 'Plot' + infile.split('.')[0] + '.pdf'
+    fn = 'Plot' + outfile
     pylab.savefig(fn)
 
     pylab.show()
@@ -60,9 +60,10 @@ def plot_urgency(infile):
 if __name__ == '__main__':
     numargs = len(sys.argv)
 
-    if numargs < 2 or numargs > 2:
-        print "Usage: %s <filename>" %sys.argv[0]
+    if numargs < 3 :
+        print "Usage: %s <infile> <outfile> " %sys.argv[0]
         sys.exit(1)
     else:
         infile =  sys.argv[1]
-        plot_urgency(infile)
+        outfile = sys.argv[2]
+        plot_urgency(infile, outfile)
