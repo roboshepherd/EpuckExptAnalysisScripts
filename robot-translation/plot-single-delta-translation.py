@@ -7,7 +7,7 @@ from pylab import *
 
 HEADER_LINE_END = 2
 
-step = []
+#step = []
 du_m = []
 
 if __name__ == '__main__':
@@ -21,9 +21,9 @@ if __name__ == '__main__':
         for line in fileinput.input(infile):
             if fileinput.lineno() <= HEADER_LINE_END:
                 continue
-            s = int(line.split(';')[1])
-            m = float(line.split(';')[2])
-            step.append(s)
+            m = float(line.split(';')[1])
+            #m1 = float(line.split(';')[2])
+            #step.append(s)
             du_m.append(m/10)
   
         fileinput.close()   
