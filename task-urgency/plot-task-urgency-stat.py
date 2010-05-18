@@ -2,8 +2,11 @@
 
 import sys
 import fileinput
+import linecache
 from numpy import *
 from pylab import *
+from matplotlib import rc
+
 step = []
 du_m = []
 #du_sd = []
@@ -36,11 +39,11 @@ if __name__ == '__main__':
         err = array(du_se)
         #print y
         errorbar(step, du_m, yerr=du_se, ecolor = '#C0C0C0')
-        plot(x, y)
+        plot(x, y, 'k')
 
-        xlabel('Time Step (s)')
-        ylabel('Sum of Task Urgency Change')
-        title('Sum of task urgency changes over time ')
+        xlabel('Time step (s)')
+        ylabel(r'Sum of changes in task-urgencies ($\Delta \Phi$)')
+        #title('Sum of task urgency changes over time ')
         grid(True)
         savefig(outfile)
         show()   

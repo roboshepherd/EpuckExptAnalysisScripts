@@ -71,7 +71,7 @@ def main():
         print e
     fileinput.close()
     f.close()
-    plot_urgency(outfile)
+    #plot_urgency(outfile)
     
 
 

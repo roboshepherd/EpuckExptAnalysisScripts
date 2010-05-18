@@ -3,11 +3,13 @@
 import time
 import sys
 import fileinput
+import fnmatch
+import os
 
 import numpy 
 import pylab 
 
-MAX_SHOPTASK = 4
+MAX_SHOPTASK = 2
 HEADER_LINE_END = 2
 
 def plot_urgency(outfile):
@@ -40,14 +42,14 @@ def plot_urgency(outfile):
         
 
 
-def main():
+def find_delta_urgency(infile, outfile):
     f = open(outfile, 'w')
     header = "##;## \n Time; Step; DeltaUrgency \n"
     f.write(header)
     last_line = [0 for x in range(MAX_SHOPTASK)]
     dt_urgency = 0
     try:
-        for line in fileinput.input():
+        for line in fileinput.input(infile):
             print line
             if fileinput.lineno() <= HEADER_LINE_END:
                 continue
@@ -72,7 +74,7 @@ def main():
         print e
     fileinput.close()
     f.close()
-    plot_urgency(outfile)
+    #plot_urgency(outfile)
     
 
 
@@ -80,8 +82,13 @@ if __name__ == '__main__':
     numargs = len(sys.argv)
 
     if numargs < 2 or numargs > 2:
-        print "Usage: %s <filename>" %sys.argv[0]
+        print "Usage: %s <raw-urgency-dir>" %sys.argv[0]
         sys.exit(1)
     else:
-        outfile = "Delta" + sys.argv[1]
-        main()
+        dir_path = sys.argv[1]
+        for file in os.listdir(dir_path):
+            if fnmatch.fnmatch(file, '*.txt'):
+                print "Parsing: ", file
+                outfile = "Delta" + file
+                infile = dir_path + '/' + file                    
+                find_delta_urgency(infile, outfile)

@@ -6,10 +6,12 @@ import fileinput
 
 import numpy 
 import pylab 
+from matplotlib import rc
 
 
 HEADER_LINE_END = 2
-MAX_SHOPTASK = 8
+LAST_DATA_LINE = 480 + HEADER_LINE_END
+MAX_SHOPTASK = 4
 ts = []
 step = []
 task1 = []
@@ -21,6 +23,8 @@ def plot_urgency(outfile):
     for line in fileinput.input(outfile):
         if fileinput.lineno() <= HEADER_LINE_END:
             continue
+        if fileinput.lineno() >= LAST_DATA_LINE:
+            break
         else:
             tm1 = line.split(";")[0]
             tm2 = line.split(";")[1]
@@ -45,13 +49,13 @@ def plot_urgency(outfile):
     
     pylab.plot(x, y1, 'r+', x, y2, 'g,',  x, y3, 'b--',  x, y4, 'k')
     #pylab.ylim(0,1)
-    pylab.xlabel('Time Step (s)')
-    pylab.ylabel('Task Urgency')
+    pylab.xlabel('Time step (s)')
+    pylab.ylabel(r'Task urgency($\phi$)')
     pylab.xlim()
     #pylab.title('Task urgencies recorded at Task-Server ')
     pylab.grid(True)
     pylab.legend(('Task1', 'Task2', 'Task3', 'Task4'))
-    fn = 'Plot' + outfile.split('.')[0] + '.pdf'
+    fn = 'Plot' + outfile.split('.')[0] + '.eps'
     pylab.savefig(fn)
 
     pylab.show()
